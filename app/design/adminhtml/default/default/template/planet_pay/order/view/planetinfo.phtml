@@ -1,0 +1,30 @@
+<?php
+/** @var $_planetOrder Planet_Pay_Model_Order */
+$_planetOrder = $this->getPlanetOrder();
+$planetOrderCreateDate = $this->formatDate($_planetOrder->getCreateDate(), 'medium', true);
+?>
+<div class="entry-edit">
+    <div class="entry-edit-head">
+        <h4><?php echo Mage::helper('planet_pay')->__('Planet Order # %s', $_planetOrder->getId()); ?></h4>
+    </div>
+    <div class="fieldset">
+        <table cellspacing="0" class="form-list">
+        <tr>
+            <td class="label"><label><?php echo Mage::helper('planet_pay')->__('Payment Status') ?></label></td>
+            <td class="value"><strong><?php echo $_planetOrder->getPaymentStatus(); ?></strong></td>
+        </tr>
+        <tr>
+            <td class="label"><label><?php echo Mage::helper('planet_pay')->__('Brand Name') ?></label></td>
+            <td class="value"><strong><?php echo $_planetOrder->getBrandName(); ?></strong></td>
+        </tr>
+        <tr>
+            <td class="label"><label><?php echo Mage::helper('planet_pay')->__('Create Date') ?></label></td>
+            <td class="value"><strong><?php echo $planetOrderCreateDate; ?></strong></td>
+        </tr>
+        <tr>
+            <td class="label"><label><?php echo Mage::helper('planet_pay')->__('Transaction ID') ?></label></td>
+            <td class="value"><strong><?php echo $_planetOrder->getTransactionId(); ?></strong></td>
+        </tr>
+        </table>
+    </div>
+</div>

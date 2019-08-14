@@ -1,0 +1,16 @@
+{
+    "name": "OpenMageModuleFostering/Planet_Payment_Checkout",
+    "type": "magento-module",
+    "license": "Open-Software-License",
+    "homepage": "",
+    "description": "Planet Payment module is support more 300 credit and debit cards, and also support back office operation.",
+    "authors": [
+    {
+        "name": "Mayank",
+        "email": "mayank@chetu.com"
+    }
+],
+    "suggest": {
+        "magento-hackathon/magento-composer-installer": "*"
+    }
+}

@@ -1,0 +1,152 @@
+<?php
+/** @var $this Planet_Pay_Block_Form_Pay */
+$translatedProcessingMessage = "Processing Planet Payment";
+//$tokeniz = $this->isTokenization();
+$baseurl = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
+/* if(!empty($tokeniz)){
+  $account_brand = $tokeniz[0]['account_brand'];
+  $registeration_id = $tokeniz[0]['registeration_id'];
+  $cc_last_four = $tokeniz[0]['cc_last_four'];
+  $cc_exp_month = $tokeniz[0]['cc_exp_month'];
+  $cc_exp_year = $tokeniz[0]['cc_exp_year'];
+  } */
+$toarr = $this->getForm();
+$token = $toarr['token'];
+Mage::log($token, null, 'token.log');
+$urlform = $toarr['url'];
+?>
+<?php
+// get domain from config
+$testMode = Mage::getStoreConfig('payment/planet_pay/test_mode');
+if ($testMode) {
+    $url = Mage::getStoreConfig('payment/planet_pay/payment_request_url_test');
+    $mode = "test";
+} else {
+    $url = Mage::getStoreConfig('payment/planet_pay/payment_request_url_live');
+    $mode = "live";
+}
+preg_match('@^(?:https?://)?([^/]+)@i', $url, $hits);
+$host = $hits[1];
+
+$scripturl = $url . "/v1/paymentWidgets.js?checkoutId=" . $token;
+?>
+<?php $_code = $this->getMethodCode() ?>
+<fieldset class="form-list">
+    <div class="planet-payment-selection">
+        <ul id="payment_form_<?php echo $_code ?>" class="form-list" style="">
+            <?php $counter = 0; ?>
+            <?php foreach ($this->getCollection() as $methodItem): ?> 
+                <li style="float: left; text-align: center;">
+                    <label for="<?php echo $methodItem->getBrandcode(); ?>" style="display:block; float: none; margin: 0 3.5px;">
+                        <?php if ($this->showIcons()) : ?>
+                            <img src="<?php echo $this->getImagePath($methodItem); ?>" width="50" />
+                        <?php endif; ?>
+                    </label>
+                    <input type="radio" name="payment[planet_payment_method]" id="ipmethod" class="newmethod" style="clear: both;" value="<?php echo $methodItem->getBrandcode(); ?>"/> 
+                </li>
+                <?php $counter++; ?>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+</fieldset>
+
+
+<script type="text/javascript">
+
+    //<![CDATA[
+
+
+
+    //]]>
+</script>
+<script type="text/javascript">
+//<![CDATA[
+
+    var jq = jQuery.noConflict();
+    jq("#checkout-step-payment .wpwl-container-card").html('');
+    //jq("#payment-buttons-container .required").css("display", "none");
+    //jq("#payment-buttons-container .button").css("display", "none");
+    // if (jq(".newmethod").click(function() {
+
+    //}
+    // }
+   // var buttonch = getCheckedRadio(document.getElementsByName('payment[method]'));
+   // if (buttonch & buttonch.value == 'planet_pay') {
+
+      //  jq("#payment-buttons-container .required").css("display", "none");
+       // jq("#payment-buttons-container .button").css("display", "none");
+
+   // }
+    /*jq('.payment[method]').change(function() {
+     if ($(this).val() == "grijs") {
+     $('img').addClass('blackImage');
+     }
+     else if ($(this).val() == "sepia") {
+     $('img').addClass('sepiaImage');
+     }
+     else if ($(this).val() == "normal") {
+     $('img').addClass('normalImage');
+     }
+     });*/
+    // var selbrand = document.getElementsByName('payment[planet_payment_method]');
+    //var chobrand = document.getElementById('ipmethod').value;
+    // alert(chobrand);
+    // for (var i = 0; i < selbrand.length; i++) {
+    //   if (selbrand[i].checked) {
+    // chobrand = selbrand[i].value;
+    // }
+    //}
+    function getCheckedRadio(radio_group) {
+        for (var i = 0; i < radio_group.length; i++) {
+            var button = radio_group[i];
+            if (button.checked) {
+                return button;
+            }
+        }
+        return undefined;
+    }
+    //var chobrand =  jq('input[name=payment[planet_payment_method]]:checked').val();
+    jq(".newmethod").click(function() {
+
+        var checkedButton = getCheckedRadio(document.getElementsByName('payment[planet_payment_method]'));
+        if (checkedButton) {
+            alert("The value is " + checkedButton.value);
+            var chobrand = checkedButton.value;
+        }
+        jq.ajaxSetup({
+            cache: true
+        });
+        jq.ajax({
+            url: '<?php echo $baseurl; ?>server.php?token=<?php echo $token; ?>&url=<?php echo $urlform; ?>' + "&chobrand=" + chobrand,
+                        context: document.body,
+                        contentType: "text/html",
+                        dataType: 'html',
+                        beforeSend: function() {
+                            // Handle the beforeSend event
+                        },
+                        success: function(data) {
+                            //alert(typeof(data));
+                            //jq("#checkout-step-payment .wpwl-container-card").html('');
+                            //jq('#payment-tool-tip').before(data);
+							jq("#checkout-step-payment .new_payon_form").remove();
+							jq('#payment-tool-tip').before('<div class="new_payon_form">'+data+'</div>');
+                            //jq("#checkout-step-payment").append(jq("<div>").load(data));
+                            // Handle the complete event
+                        },
+                        complete: function() {
+                            // Handle the complete event
+                            //var htmlcont = jq("#payonpaymentform").html();
+                            // jq("#payonpaymentform").html('');
+                            //  jq("#appendpayonhtml").html(htmlcont);
+                            /// jq("#appendpayonhtml .wpwl-container-card").css("display","block");
+                            //jq('#inputid').remove();
+                            // jq(".wpwl-container-card .wpwl-wrapper-expiry").css("display","none");
+                            // jq(".wpwl-container-card .wpwl-wrapper-expiry").css("display","none");
+                        }
+                    }).done(function() {
+                        jq(this).addClass("done");
+                    });
+                });
+//]]>    
+</script>
+<!-- ending payment form on payment step -->

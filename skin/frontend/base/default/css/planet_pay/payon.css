@@ -1,0 +1,53 @@
+/**
+ * {{Planet}}_{{Pay}} extension
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the MIT License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/mit-license.php
+ * 
+ * @category       {{Planet}}
+ * @package        {{Planet}}_{{Pay}}
+ * @copyright      Copyright (c) {{2015}}
+ * @license        http://opensource.org/licenses/mit-license.php MIT License
+ */
+.wpwl-container-card .wpwl-form-card{
+    background: none !important;
+    border:  none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+/*.wpwl-container-card{ overflow: hidden;
+    height:0px;
+   
+}*/
+
+/*div .wpwl-form.wpwl-form-card.wpwl-clearfix
+{
+    position: relative;
+    margin-left: 8px;
+}*/
+.wpwl-label-brand, .wpwl-wrapper-brand{
+    display:none;
+}
+
+#ajaxDiv > div > form {
+    border: none;
+    box-shadow: none;
+}
+
+#payment_form_planet_pay li label img {
+    max-height: 35px;
+    max-width: 50px;
+}
+.wpwl-brand {
+    background: none;
+    margin: 0 auto;
+}
+#payment-progress-opcheckout table{
+    
+    display: none;
+}
+

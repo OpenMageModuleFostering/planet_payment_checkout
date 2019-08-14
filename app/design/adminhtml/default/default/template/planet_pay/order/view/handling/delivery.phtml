@@ -1,0 +1,39 @@
+<div id="order_delivery_block">
+    <div id="handling_form" class="order-handling-form">
+        <span class="field-row">
+            <label class="normal" for="delivery_tracking"><?php echo Mage::helper('planet_pay')->__('Tracking Number') ?></label><br/>
+            <input type="text" name="delivery[tracking]" id="delivery_tracking">
+        </span>
+        <span class="field-row">
+            <label class="normal" for="delivery_carrier"><?php echo Mage::helper('planet_pay')->__('Carrier') ?></label><br/>
+            <input type="text" name="delivery[carrier]" id="delivery_carrier">
+        </span>
+        <div class="f-left">
+            <?php echo $this->getChildHtml('submit_button') ?>
+        </div>
+        <div class="f-right">
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="divider"></div>
+    <ul class="note-list">
+    <?php foreach ($this->getOrderDeliveryLogs() as $deliveryNote): ?>
+        <li>
+            <strong><?php echo $this->helper('core')->formatDate($deliveryNote->getDate(), 'medium') ?></strong>
+            <?php echo $this->helper('core')->formatTime($deliveryNote->getDate(), 'medium') ?><span class="separator">|</span><strong><?php echo $deliveryNote->getCode(); ?></strong><br/>
+            <small>
+                <?php echo $this->helper('planet_pay')->__('Delivery Note Status: ') ?>
+                <strong class="subdue">
+                    <?php if ($deliveryNote->getSuccess()): ?>
+                        <img src="<?php echo $this->getSkinUrl('images/ico_success.gif') ?>" width="16" height="16" alt="" />
+                        <?php echo $this->helper('planet_pay')->__('Success') ?>
+                    <?php else: ?>
+                        <?php echo $this->helper('planet_pay')->__('Unsuccess') ?>
+                    <?php endif; ?>
+                </strong>
+            </small>
+            <br/><?php echo $deliveryNote->getDescription(); ?>
+        </li>
+    <?php endforeach; ?>
+    </ul>
+</div>

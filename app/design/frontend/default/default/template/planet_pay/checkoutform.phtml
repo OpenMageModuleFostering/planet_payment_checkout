@@ -1,0 +1,35 @@
+<?php
+/** @var $this Planet_Pay_Block_Form_Form */
+function prepareCheckout() {
+  $data = "authentication.userId=8a8294174b3213ae014b3717ee6a0597" .
+    "&authentication.password=demodemo" .
+    "&authentication.entityId=ff80808145a7f31c0145ae52b7bc0ab8" .
+    "&paymentType=PA" .
+    "&currency=EUR" .
+    "&amount=10.55";
+	
+  $params = array('http' => array(
+    'method' => 'POST',
+    'content' => $data
+  ));
+
+// I tend to prefer to use curl over fopen.
+
+$ch = curl_init('https://test.oppwa.com/v1/checkouts');
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+    'Accept: application/json',
+    'Content-Length: ' . strlen($data))
+);
+
+$result = curl_exec($ch);
+  $jsonRes = json_decode($result);
+  return $jsonRes->id;
+
+}
+$token = prepareCheckout();
+?>
+<form action="http://localhost/practice/testprocess.php" class="paymentWidgets">VISA MASTER</form>
+<script src="https://test.oppwa.com/v1/paymentWidgets.js?checkoutId=<?php echo $token; ?>"></script>

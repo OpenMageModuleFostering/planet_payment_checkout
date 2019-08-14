@@ -1,0 +1,11 @@
+<?php
+/** @var $this Planet_Pay_Block_Adminhtml_Order_View_Request */
+?>
+<table cellspacing="0" class="form-list">
+    <?php foreach ($this->getOrderRequestCustomer() as $name => $value): ?>
+    <tr>
+        <td class="label"><label><?php echo $name; ?></label></td>
+        <td class="value"><strong><?php echo $value; ?></strong></td>
+    </tr>
+    <?php endforeach; ?>
+</table>

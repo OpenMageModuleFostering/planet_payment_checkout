@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--<config>
+    <menu>
+        <sales>
+            <children>
+                <planet_order translate="title" module="planet_pay">
+                    <title>Planet Orders Manager</title>
+                    <action>adminhtml/planet_order/index</action>
+                    <sort_order>10</sort_order>
+                </planet_order>
+            </children>
+        </sales>
+    </menu>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <sales>
+                        <children>
+                            <planet_order>
+                                <title>Planet Orders Manager</title>
+                                <sort_order>10</sort_order>
+                            </planet_order>
+                        </children>
+                    </sales>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>-->

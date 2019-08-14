@@ -1,0 +1,44 @@
+<?php
+/**
+ * @var Planet_Pay_Block_Checkout_Onepage_Review $this
+ */
+?>
+<div class="order-review" id="checkout-review-load">
+    <!-- Content loaded dynamically -->
+</div>
+
+<?php
+if ($this->loadReview()):
+    // get domain from config
+    $testMode = Mage::getStoreConfig('payment/planet_pay/test_mode');
+    if ($testMode) {
+        $url = Mage::getStoreConfig('payment/planet_pay/payment_request_url_test');
+        $mode = "test";
+    }
+    else {
+        $url = Mage::getStoreConfig('payment/planet_pay/payment_request_url_live');
+        $mode = "live";
+    }
+    preg_match('@^(?:https?://)?([^/]+)@i', $url, $hits);
+    $host = $hits[1];
+?>
+<script type="text/javascript">
+    //<![CDATA[
+    var updater = new Ajax.Updater('checkout-review-load', checkout.reviewUrl,
+        {
+            method: 'get',
+            onFailure: checkout.ajaxFailure.bind(checkout),
+            onComplete: function() {
+                var planet = new Planet();
+                planet.initForm({
+                    mode: '<?= $mode ?>',
+                    host: '<?= $host ?>'
+                });
+                <?php if(!is_null($this->getMessage())) : ?>
+                    alert('<?php echo $this->getMessage(); ?>');
+                <?php endif; ?>
+            }
+        });
+    //]]>
+</script>
+<?php endif; ?>

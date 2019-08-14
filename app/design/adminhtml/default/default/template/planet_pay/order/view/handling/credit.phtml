@@ -1,0 +1,32 @@
+<?php /** @var Planet_Pay_Block_Adminhtml_Order_View_Handling_Credit  $this */?>
+<div id="order_credit_block">
+    <div id="handling_form" class="order-handling-form">
+        <div class="f-left">
+            <?php echo $this->getChildHtml('submit_button') ?>
+        </div>
+        <div class="f-right">
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="divider"></div>
+    <ul class="note-list">
+    <?php foreach ($this->getOrderCreditLogs() as $creditNote): ?>
+        <li>
+            <strong><?php echo $this->helper('core')->formatDate($creditNote->getDate(), 'medium') ?></strong>
+            <?php echo $this->helper('core')->formatTime($creditNote->getDate(), 'medium') ?><span class="separator">|</span><strong><?php echo $creditNote->getCode(); ?></strong><br/>
+            <small>
+                <?php echo $this->helper('planet_pay')->__('Credit Note Status: ') ?>
+                <strong class="subdue">
+                    <?php if ($creditNote->getSuccess()): ?>
+                        <img src="<?php echo $this->getSkinUrl('images/ico_success.gif') ?>" width="16" height="16" alt="" />
+                        <?php echo $this->helper('planet_pay')->__('Success') ?>
+                    <?php else: ?>
+                        <?php echo $this->helper('planet_pay')->__('Unsuccess') ?>
+                    <?php endif; ?>
+                </strong>
+            </small>
+            <br/><?php echo $creditNote->getDescription(); ?>
+        </li>
+    <?php endforeach; ?>
+    </ul>
+</div>

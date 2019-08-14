@@ -1,0 +1,27 @@
+<?php /** @var $this Planet_Pay_Block_Adminhtml_Order_View_Tab_Credit */ ?>
+<?php $_order = $this->getOrder() ?>
+<div>
+    <div id="order-messages">
+        <?php echo $this->getChildHtml('order_messages') ?>
+        <?php if(!$this->isDeliveryNoteSent()): ?>
+        <div>
+            <?php echo Mage::helper('planet_pay')->__('Partial credit note is not possible until delivery note is sent
+                                                       and processed by Planet!
+                                                       Please send delivery note first or send a full credit note.') ?>
+        </div>
+        <?php endif; ?>
+    </div>
+    <div class="entry-edit">
+        <div class="entry-edit-head">
+            <h4 class="icon-head head-products"><?php echo Mage::helper('sales')->__('Items Ordered') ?></h4>
+        </div>
+    </div>
+    <?php echo $this->getItemsHtml() ?>
+    <div class="clear"></div>
+    <div id="order-credit">
+        <?php echo $this->getChildHtml('order_credit') ?>
+    </div>
+
+
+</div>
+

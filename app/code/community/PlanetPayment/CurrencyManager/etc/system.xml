@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Planet Payment
+*
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Open Software License (OSL 3.0)
+* that is bundled with this package in the file LICENSE.txt.
+* It is also available through the world-wide-web at this URL:
+* http://opensource.org/licenses/osl-3.0.php
+*
+* @category   PlanetPayment
+* @package    PlanetPayment_CurrencyManager
+* @copyright  Copyright (c) 2012 Planet Payment Inc. (http://www.planetpayment.com)
+* @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+*/
+-->
+<config>
+    <sections>
+        <currencymanager translate="label" module="currencymanager">
+            <label>Currency Manager</label>
+            <tab>planetpaymentall</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>400</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <general translate="label">
+                    <label>Planet Payment - Currency Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <heading_frontend translate="label">
+                            <label>Frontend Settings</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </heading_frontend>
+                        <enabled translate="label">
+                            <label>Enabled for Frontend</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enabled>
+
+                        <heading_admin translate="label">
+                            <label>Admin Specific Settings</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </heading_admin>
+                        <enabledadm translate="label">
+                            <label>Enabled for Admin</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>210</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enabledadm>
+                        <heading_global translate="label">
+                            <label>Currency Settings (Default)</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>300</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </heading_global>
+                        <precision translate="label comment">
+                            <label>Display precision</label>
+                            <comment><![CDATA[Number of decimal (e.g. 0, 1, 2). Default: 0<br>Examples<br>4 => 20.2347<br>3 => 20.234<br>2 => 20.23<br>1 => 20.2<br>0 => 20]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>310</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </precision>
+                        <heading_specific translate="label">
+                            <label>Currency Settings (for specific currency)</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>400</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </heading_specific>
+                        <countrywise translate="label"><!-- added -->
+                            <label>Country Specific Settings</label>
+                            <frontend_type>select</frontend_type>
+                            <frontend_model>currencymanager/adminhtml_countrywise</frontend_model>
+                            <backend_model>adminhtml/system_config_backend_serialized</backend_model>
+                            <sort_order>420</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </countrywise>
+                        
+                    </fields>
+                </general>
+            </groups>
+        </currencymanager>
+    </sections>
+    
+    <default>
+        <currencymanager>
+            <general>
+                <enabled>0</enabled>
+                <enabledadm>0</enabledadm>
+                <precision>0</precision>
+            </general>
+        </currencymanager>
+    </default>
+    
+</config>

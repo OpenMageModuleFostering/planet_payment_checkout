@@ -1,0 +1,228 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Planet_Pay>
+            <version>1.0.6</version>
+        </Planet_Pay>
+    </modules>
+    <global>
+        <currency>
+            <import>
+                <services>
+                    <planet_payment_core>
+                        <name>Planet Payment</name>
+                        <model>planet_pay/currency_import_planet</model>
+                    </planet_payment_core>
+                </services>
+            </import>
+        </currency>
+        <models>
+            <planet_pay>
+                <class>Planet_Pay_Model</class>
+                <resourceModel>pay_resources</resourceModel>
+            </planet_pay>
+            <pay_resources>
+                <class>Planet_Pay_Model_Resource</class>
+                <entities>
+                    <method>
+                        <table>planet_pay_method</table>
+                    </method>
+                    <order>
+                        <table>planet_pay_order</table>
+                    </order>
+                    <orderlog>
+                        <table>planet_pay_orderlog</table>
+                    </orderlog>
+                    <carddetail>
+                        <table>planet_pay_carddetail</table>
+                    </carddetail>
+                </entities>
+            </pay_resources>
+            <checkout>
+                <rewrite>
+                    <type_onepage>Planet_Pay_Model_Checkout_Type_Onepage</type_onepage>
+                </rewrite>
+            </checkout>
+           <!--<sales>
+                <rewrite>
+                    <order_payment>Planet_Pay_Model_Sales_Order_Payment</order_payment>
+                </rewrite>
+            </sales>-->
+            <paygate>
+  
+                <rewrite>
+
+                    <authorizenet>Planet_Pay_Model_Authorizenet</authorizenet>
+
+                </rewrite>
+  
+            </paygate>
+        </models>
+        <resources>
+            <planet_pay_setup>
+                <setup>
+                    <module>Planet_Pay</module>
+                    <class>Mage_Core_Model_Resource_Setup</class>
+                </setup>
+            </planet_pay_setup>
+            <planet_pay_write>
+                <connection>
+                    <use>externaldb_database</use>
+                </connection>
+            </planet_pay_write>
+            <planet_pay_read>
+                <connection>
+                    <use>externaldb_database</use>
+                </connection>
+            </planet_pay_read>
+            <planet_pay_setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </planet_pay_setup>
+        </resources>
+        <blocks>
+            <planet_pay>
+                <class>Planet_Pay_Block</class>
+            </planet_pay>
+            <checkout>
+                <rewrite>
+                    <onepage>Planet_Pay_Block_Checkout_Onepage</onepage>
+                </rewrite>
+            </checkout>
+			<checkout>
+                <rewrite>
+                    <onepage_payment_methods>Planet_Pay_Block_Checkout_Onepage_payment_methods</onepage_payment_methods>
+                </rewrite>
+            </checkout>
+        </blocks>
+        <helpers>
+            <planet_pay>
+                <class>Planet_Pay_Helper</class>
+            </planet_pay>
+			
+        </helpers>
+		<template>
+            <email>
+                <checkout_payment_failed_template translate="label" module="planet_pay">
+                    <label>Payment Failed</label>
+                    <file>planet_pay/payment_failed.html</file>
+                    <type>html</type>
+                </checkout_payment_failed_template>
+				
+                <sales_email_order_template translate="label" module="sales">
+                    <label>New Order</label>
+                    <file>sales/planet_pay/order_new.html</file>
+                    <type>html</type>
+                </sales_email_order_template>
+                <sales_email_order_guest_template translate="label" module="sales">
+                    <label>New Order for Guest</label>
+                    <file>sales/planet_pay/order_new_guest.html</file>
+                    <type>html</type>
+                </sales_email_order_guest_template>
+            </email>
+        </template>
+        <events>
+            <checkout_onepage_controller_success_action>
+                <observers>
+                    <planet_pay_checkout_observer>
+                        <type>singleton</type>
+                        <class>Planet_Pay_Model_Checkout_Observer</class>
+                        <method>checkoutSuccessAction</method>
+                    </planet_pay_checkout_observer>
+                </observers>
+            </checkout_onepage_controller_success_action>
+        </events>
+    </global>
+    <crontab>
+        <jobs>
+            <planet_payment_core_currency_rate>
+                <schedule>
+                    <cron_expr>* * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>planet_pay/currency_import_planet::runExchangeRateQuery</model>
+                </run>
+            </planet_payment_core_currency_rate>
+        </jobs>
+    </crontab>	
+    <frontend>
+        <routers>
+            <planet>
+                <use>standard</use>
+                <args>
+                    <module>Planet_Pay</module>
+                    <frontName>planet</frontName>
+                </args>
+            </planet>
+        </routers>
+        <layout>
+            <updates>
+                <pay>
+                    <file>pay.xml</file>
+                </pay>
+            </updates>
+        </layout>
+    </frontend>
+
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Planet_Pay after="Mage_Adminhtml">Planet_Pay</Planet_Pay>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+
+    <adminhtml>
+        <menu>
+            <planet module="planet_pay">
+                <title>Brand</title>
+                <sort_order>100</sort_order>               
+                <children>
+                    <items module="planet_pay">
+                        <title>Manage Brands</title>
+                        <sort_order>0</sort_order>
+                        <action>planet/adminhtml_brand</action>
+                    </items>
+                </children>
+            </planet>
+        </menu>
+        <layout>
+            <updates>
+                <planet_pay>
+                    <file>planet_pay.xml</file>
+                </planet_pay>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Custom_Module>
+                    <files>
+                        <default>Planet_Pay.csv</default>
+                    </files>
+                </Custom_Module>
+            </modules>
+        </translate>    
+    </adminhtml>
+
+    <default>
+        <payment>
+            <planet_pay>
+                <active>1</active>
+                <model>planet_pay/select</model>
+                <order_status>processing</order_status>
+                <payment_action>authorize</payment_action> 
+                <title>Planet Payment Method</title>
+                <payment_type_live>PA</payment_type_live>
+                <payment_type_test>PA</payment_type_test>
+                <payment_request_url_live>https://planetpaymentgateway.com</payment_request_url_live>
+                <payment_request_url_test>https://test.planetpaymentgateway.com</payment_request_url_test>
+            </planet_pay>
+        </payment>
+		
+    </default>
+</config>

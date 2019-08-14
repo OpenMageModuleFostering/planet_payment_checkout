@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<layout>
+    
+    <planet_adminhtml_brand_index>
+        <reference name="content">
+            <block type="planet_pay/adminhtml_pay" name="brand" />
+        </reference>
+    </planet_adminhtml_brand_index>
+    <adminhtml_sales_order_view>
+        <reference name="order_totals">
+            <action method="setTemplate">
+                <template>planet_pay/sales/order/totals.phtml</template>
+            </action>
+        </reference>
+    </adminhtml_sales_order_view>
+</layout>

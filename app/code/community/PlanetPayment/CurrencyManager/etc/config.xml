@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Planet Payment
+*
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Open Software License (OSL 3.0)
+* that is bundled with this package in the file LICENSE.txt.
+* It is also available through the world-wide-web at this URL:
+* http://opensource.org/licenses/osl-3.0.php
+*
+* @category   PlanetPayment
+* @package    PlanetPayment_CurrencyManager
+* @copyright  Copyright (c) 2012 Planet Payment Inc. (http://www.planetpayment.com)
+* @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+*/
+-->
+<config>
+    <modules>
+        <PlanetPayment_CurrencyManager>
+            <name>PlanetPayment Currency Manager</name>
+            <version>1.0.0</version>
+        </PlanetPayment_CurrencyManager>
+    </modules>
+
+    <global>
+        <helpers>
+            <currencymanager>
+                <class>PlanetPayment_CurrencyManager_Helper</class>
+            </currencymanager>
+            <tax>
+                <rewrite>
+                    <data>PlanetPayment_CurrencyManager_Helper_Tax</data>
+                </rewrite>
+            </tax>
+        </helpers>
+        <models>
+            <directory>
+                <rewrite>
+                    <currency>PlanetPayment_CurrencyManager_Model_Currency</currency>
+                </rewrite>
+            </directory>
+
+            <core>
+                <rewrite>
+                    <locale>PlanetPayment_CurrencyManager_Model_Locale</locale>
+                    <store>PlanetPayment_CurrencyManager_Model_Store</store>
+                </rewrite>
+            </core>
+
+            <currencymanager>
+                <class>PlanetPayment_CurrencyManager_Model</class>
+            </currencymanager>
+        </models>
+        
+        <blocks>
+            <currencymanager>
+                <class>PlanetPayment_CurrencyManager_Block</class>
+            </currencymanager>
+            <adminhtml>
+                <rewrite>
+                    <catalog_product_helper_form_price>PlanetPayment_CurrencyManager_Block_Adminhtml_Price</catalog_product_helper_form_price>
+                </rewrite>
+                <rewrite>
+                    <catalog_product_edit_tab_options_option>PlanetPayment_CurrencyManager_Block_Adminhtml_Catalog_Product_Edit_Tab_Options_Option</catalog_product_edit_tab_options_option>
+                </rewrite>
+            </adminhtml>
+        </blocks>
+        
+        <resources>
+            <currency_setup>
+                <setup>
+                    <module>PlanetPayment_CurrencyManager</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </currency_setup>
+        </resources>
+        
+        <events>
+            <sales_order_place_after>
+                <observers>
+                    <planetpayment_currencymanager_order_observer>
+                        <class>PlanetPayment_CurrencyManager_Model_Observer</class>
+                        <method>salesOrderPlaceAfter</method>
+                    </planetpayment_currencymanager_order_observer>
+                </observers>
+            </sales_order_place_after>
+        </events>
+    </global>
+
+    <frontend>
+        <routers>
+            <currencymanager>
+                <use>standard</use>
+                <args>
+                    <module>PlanetPayment_CurrencyManager</module>
+                    <frontName>currencymanager</frontName>
+                </args>
+            </currencymanager>
+        </routers>
+    </frontend>
+    <adminhtml>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <currencymanager translate="title" module="currencymanager">
+                                            <title>PlanetPayment Currency Manager</title>
+                                            <sort_order>500</sort_order>
+                                        </currencymanager>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+</config>
